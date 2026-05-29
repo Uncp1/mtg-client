@@ -1,0 +1,10 @@
+{
+  "name": "@mtg/game-core",
+  "version": "0.0.0",
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": { ".": "./src/index.ts" },
+  "scripts": { "typecheck": "tsc --noEmit", "test": "vitest" },
+  "dependencies": { "@reduxjs/toolkit": "^2" }
+}
