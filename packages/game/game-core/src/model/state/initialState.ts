@@ -1,7 +1,5 @@
-import type { GameState, PlayerId, PlayerState, Zone, ZoneType, ZoneId } from '../types';
-
-//todo move to helpers
-const zoneId = (playerId: PlayerId, type: ZoneType): ZoneId => `${playerId}-${type}`;
+import type { GameState, PlayerId, PlayerState, Zone, ZoneType } from '../types';
+import { zoneId } from '../board/helpers';
 
 //todo refactor and move later
 export const ZONE_TYPES = [

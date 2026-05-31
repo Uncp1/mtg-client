@@ -41,6 +41,9 @@ importers:
 
   apps/game-standalone:
     dependencies:
+      '@mtg/game-core':
+        specifier: workspace:^
+        version: link:../../packages/game/game-core
       '@mtg/game-ui':
         specifier: workspace:^
         version: link:../../packages/game/game-ui
@@ -50,6 +53,9 @@ importers:
       react-dom:
         specifier: ^19.2.6
         version: 19.2.6(react@19.2.6)
+      react-redux:
+        specifier: ^9.3.0
+        version: 9.3.0(@types/react@19.2.15)(react@19.2.6)
     devDependencies:
       '@eslint/js':
         specifier: ^10.0.1
