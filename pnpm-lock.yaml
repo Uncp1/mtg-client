@@ -47,6 +47,9 @@ importers:
       '@mtg/game-ui':
         specifier: workspace:^
         version: link:../../packages/game/game-ui
+      '@mtg/scryfall-fetcher':
+        specifier: workspace:^
+        version: link:../../packages/scryfall-fetcher
       react:
         specifier: ^19.2.6
         version: 19.2.6

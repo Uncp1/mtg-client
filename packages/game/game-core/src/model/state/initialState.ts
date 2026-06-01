@@ -11,6 +11,7 @@ export const ZONE_TYPES = [
   'command',
   'stack',
   'tokenStore',
+  'sideboard',
 ] as const satisfies readonly ZoneType[];
 
 function buildPlayer(seed: { id: PlayerId; name: string }): { player: PlayerState; zones: Zone[] } {
