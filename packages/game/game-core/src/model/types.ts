@@ -10,7 +10,8 @@ export type ZoneType =
   | 'exile'
   | 'command'
   | 'stack'
-  | 'tokenStore'; // ненастоящая зона, но будем хранить там токены
+  | 'tokenStore' // ненастоящая зона, но будем хранить там токены
+  | 'sideBoard';
 
 export type Phase = 'untap' | 'upkeep' | 'draw' | 'main1' | 'combat' | 'main2' | 'end' | 'cleanup';
 
