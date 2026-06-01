@@ -15,19 +15,40 @@ export type ZoneType =
 
 export type Phase = 'untap' | 'upkeep' | 'draw' | 'main1' | 'combat' | 'main2' | 'end' | 'cleanup';
 
-export interface CardData {
+export interface CardImageURLS {
+  small: string;
+  normal: string;
+  large: string;
+}
+
+type BaseCardData = {
   /** Scryfall id */
   id: string;
   name: string;
-  imageURL: string;
+  imageURLS: CardImageURLS;
   oracleText: string;
   typeLine: string;
+  power?: string;
+  toughness?: string;
   manaCost?: string;
-  /** dfc only */
-  backName?: string;
-  backImageURL?: string;
-  backOracleText?: string;
-}
+  colors?: string[];
+};
+
+export type CardData =
+  | (BaseCardData & {
+      isDFC: false;
+    })
+  | (BaseCardData & {
+      isDFC: true;
+      backName: string;
+      backImageURLS: CardImageURLS;
+      backOracleText: string;
+      backTypeLine: string;
+      backPower?: string;
+      backToughness?: string;
+      backManaCost?: string;
+      backColors?: string[];
+    });
 
 export interface CardInstance {
   instanceId: InstanceId;
