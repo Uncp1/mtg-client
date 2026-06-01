@@ -84,11 +84,3 @@ async function fetchDecklist(
 }
 
 export default fetchDecklist;
-
-const dfcRes = await fetchCardByName('Wedding Announcement');
-const res = await fetchCardByName('Bear Cub');
-const resVers = await fetchCardByName('forest', 'XLN');
-
-console.log('dfc', dfcRes);
-console.log('res', res);
-console.log('resVers', resVers);

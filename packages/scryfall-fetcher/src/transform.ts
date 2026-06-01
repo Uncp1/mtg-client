@@ -1,8 +1,5 @@
 import type { CardData, CardImageURLS } from '@mtg/game-core';
 
-/** raw scryfall data */
-
-// Связанная карта (токены, meld-части и т.п.) из all_parts.
 export interface ScryfallRelatedCard {
   component: 'token' | 'meld_part' | 'meld_result' | 'combo_piece';
   id: string;
@@ -11,7 +8,6 @@ export interface ScryfallRelatedCard {
   uri: string;
 }
 
-// Печатные поля. У одноликих карт они на верхнем уровне, у DFC — по граням.
 interface ScryfallCardFace {
   name: string;
   type_line: string;
@@ -30,7 +26,6 @@ interface ScryfallCardBase {
   all_parts?: ScryfallRelatedCard[];
 }
 
-// Одноликая карта: печатные поля и картинка лежат сверху.
 interface ScryfallSingleCard extends ScryfallCardBase {
   oracle_text: string;
   mana_cost: string;
@@ -41,7 +36,6 @@ interface ScryfallSingleCard extends ScryfallCardBase {
   card_faces?: undefined;
 }
 
-// DFC: сверху нет image_uris, всё лежит в card_faces.
 interface ScryfallDfcCard extends ScryfallCardBase {
   image_uris?: undefined;
   card_faces: ScryfallCardFace[];
@@ -49,9 +43,8 @@ interface ScryfallDfcCard extends ScryfallCardBase {
 
 export type ScryfallCard = ScryfallSingleCard | ScryfallDfcCard;
 
-// Чистим сырой ответ Scryfall в game-core CardData.
 export function transform(card: ScryfallCard): CardData {
-  // DFC: image_uris сверху нет — narrow на вариант с card_faces.
+  /** DFC: сужаем по наличию на верхнем уровне image_uris */
   if (!card.image_uris) {
     const [front, back] = card.card_faces;
 
