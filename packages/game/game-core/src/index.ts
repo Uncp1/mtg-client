@@ -8,7 +8,7 @@ export type {
   PlayerSeed,
 } from './createGameCore';
 
-export { boardActions, moveCard, addCards } from './model/board/boardSlice';
+export { boardActions, moveCard, addCards, shuffle, drawCards } from './model/board/boardSlice';
 export { zoneId } from './model/board/helpers';
 export { createInitialState } from './model/state/initialState';
 

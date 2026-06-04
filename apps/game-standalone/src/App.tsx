@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Provider } from 'react-redux';
-import { createGameCore, addCards, zoneId } from '@mtg/game-core';
+import { createGameCore, addCards, shuffle, drawCards, zoneId } from '@mtg/game-core';
 import type { CardData, CardInstance, ZoneType } from '@mtg/game-core';
 import { Board } from '@mtg/game-ui';
 import { parseArenaImport, fetchDecklist } from '@mtg/scryfall-fetcher';
@@ -155,6 +155,15 @@ export default function App() {
             cards: [...white.cards, ...green.cards],
           }),
         );
+
+        // shuffle each library, then draw an opening hand of 7
+        for (const { id } of players) {
+          // seed generated outside the reducer keeps it pure / reproducible
+          const seed = Math.floor(Math.random() * 2 ** 32);
+          core.dispatch(shuffle({ playerId: id, seed }));
+          core.dispatch(drawCards({ playerId: id, numberOfCards: 7 }));
+        }
+
         console.log(core.getState());
         setStatus('ready');
       } catch (err) {
