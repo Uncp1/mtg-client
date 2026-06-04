@@ -5,6 +5,23 @@ import type { CardData, CardInstance, ZoneType } from '@mtg/game-core';
 import { Board } from '@mtg/game-ui';
 import { parseArenaImport, fetchDecklist } from '@mtg/scryfall-fetcher';
 
+
+/**
+ *
+ * Нужно быть осторожнее с частыми запросами
+ * {
+ *   "object": "error",
+ *   "code": "rate_limited",
+ *   "status": 429,
+ *   "details": "You are being rate-limited, try again after 60 seconds.
+ *   Scryfall requires you to constrain API usage to less than 10 requests per second.
+ *   DO NOT IGNORE THIS WARNING, FAILURE TO ACT WILL RESULT IN A NETWORK BLOCK.
+ *   If you need access to a large amount of card data,
+ *   please use our bulk data offerings at https://scryfall.com/docs/api/bulk-data"
+ * }
+ *
+ * возможно что-то в кеш кидать иначе при тестах я в блок попаду
+ */
 const players = [
   { id: 'p1', name: 'Pupa' },
   { id: 'p2', name: 'Buba' },
