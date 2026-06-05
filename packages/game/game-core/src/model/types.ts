@@ -21,7 +21,7 @@ export interface CardImageURLS {
   large: string;
 }
 
-type BaseCardData = {
+interface BaseCardData {
   /** Scryfall id */
   id: string;
   name: string;
@@ -32,7 +32,7 @@ type BaseCardData = {
   toughness?: string;
   manaCost?: string;
   colors?: string[];
-};
+}
 
 export type CardData =
   | (BaseCardData & {
