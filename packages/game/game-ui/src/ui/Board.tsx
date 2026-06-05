@@ -1,34 +1,45 @@
 import { useAppSelector } from '../store/hooks';
+import Card from './card/Card';
 
 export function Board() {
   const { players, zones, cards, cardDefs } = useAppSelector((s) => s.board);
   //todo внимание аишный ui ниже, плейсхолдер для тестов
   return (
-    <div style={{ display: 'flex', gap: 24, padding: 16, fontFamily: 'sans-serif' }}>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 24,
+        padding: 16,
+        fontFamily: 'sans-serif',
+      }}
+    >
       {Object.values(players).map((player) => {
-        const playerZones = Object.values(zones).filter((z) => z.ownerId === player.id);
+        const hand = zones[`${player.id}-hand`];
 
         return (
           <section
             key={player.id}
-            style={{ border: '1px solid #ccc', borderRadius: 8, padding: 12, minWidth: 220 }}
+            style={{
+              border: '1px solid #ccc',
+              borderRadius: 8,
+              padding: 12,
+            }}
           >
             <h2 style={{ margin: '0 0 8px' }}>
               {player.name} <small>· life {player.life}</small>
             </h2>
-
-            {playerZones.map((zone) => (
-              <div key={zone.id} style={{ marginBottom: 8 }}>
-                <strong>{zone.type}</strong> ({zone.cardsId.length})
-                <ul style={{ margin: '4px 0 0', paddingLeft: 16 }}>
-                  {zone.cardsId.map((id) => {
-                    const card = cards[id];
-                    const def = cardDefs[card.definitionId];
-                    return <li key={id}>{def?.name ?? card.definitionId}</li>;
-                  })}
-                </ul>
-              </div>
-            ))}
+            <strong>hand</strong> ({hand.cardsId.length})
+            <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginTop: 8 }}>
+              {hand.cardsId.map((id) => {
+                const instance = cards[id];
+                const definition = cardDefs[instance.definitionId];
+                if (!definition) return null;
+                return (
+                  <Card key={id} instance={instance} definition={definition} />
+                );
+              })}
+            </div>
           </section>
         );
       })}
