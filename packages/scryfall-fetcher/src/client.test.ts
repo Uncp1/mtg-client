@@ -38,7 +38,7 @@ describe('fetchCardByName', () => {
     const res = await fetchCardByName('Llanowar Elves');
 
     expect(res).toEqual({ name: 'Llanowar Elves' });
-    expect(fetchMock).toHaveBeenCalledWith(
+    expect(fetchMock.mock.calls[0][0]).toBe(
       'https://api.scryfall.com/cards/named?exact=Llanowar%20Elves',
     );
   });
@@ -48,7 +48,7 @@ describe('fetchCardByName', () => {
 
     await fetchCardByName('Opt', 'eld');
 
-    expect(fetchMock).toHaveBeenCalledWith(
+    expect(fetchMock.mock.calls[0][0]).toBe(
       'https://api.scryfall.com/cards/named?exact=Opt&set=eld',
     );
   });
