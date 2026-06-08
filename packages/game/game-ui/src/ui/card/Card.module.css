@@ -1,14 +1,12 @@
 .card {
-    /**
+    /* Реальная карта MTG: 63 × 88 мм (≈ 5:7) */
+    --card-w: 240px;
+    --card-h: calc(var(--card-w) * 88 / 63);
+    --card-radius: calc(var(--card-w) * 0.048);
+
     width: var(--card-w);
     height: var(--card-h);
     border-radius: var(--card-radius);
-    todo заменить аишные стили, добавить переменные
-     */
-
-    width: 240px;
-    height: 360px;
-    border-radius: 8px;
     transition: transform 120ms ease;
     cursor: grab;
 }
