@@ -1,5 +1,6 @@
 import { useAppSelector } from '../store/hooks';
 import Player from './Player/Player';
+import Inspector from './inspector/Inspector';
 
 export function Board() {
   const playerIds = useAppSelector((s) => Object.keys(s.board.players));
@@ -18,6 +19,8 @@ export function Board() {
       {playerIds.map((id) => (
         <Player key={id} playerId={id} />
       ))}
+
+      <Inspector />
     </div>
   );
 }
