@@ -2,6 +2,7 @@ import clsx from 'clsx';
 import type { PlayerId } from '@mtg/game-core';
 
 import { useAppSelector } from '../../store/hooks';
+import Battlefield from '../zones/Battlefield/Battlefield';
 import Hand from '../zones/Hand/Hand';
 import ZonePile from '../zones/ZonePile/ZonePile';
 
@@ -20,7 +21,8 @@ export default function Player({ playerId }: Props) {
         {player.name} <small>· life {player.life}</small>
       </h2>
 
-      {/* todo battlefield*/}
+      <Battlefield playerId={playerId} />
+
       <div className={styles.piles}>
         <ZonePile playerId={playerId} type="library" />
         <ZonePile playerId={playerId} type="graveyard" />

@@ -1,0 +1,11 @@
+.battlefield {
+    position: relative;
+    min-height: 220px;
+    --card-w: 90px;
+    border: 1px dashed #555;
+    border-radius: 8px;
+}
+
+.slot {
+    position: absolute;
+}
