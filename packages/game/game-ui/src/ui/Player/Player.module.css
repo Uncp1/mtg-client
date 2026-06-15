@@ -1,0 +1,14 @@
+.player {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 12px;
+}
+
+.header {
+    margin: 0 0 8px;
+}
+
+.piles {
+    display: flex;
+    gap: 12px;
+}

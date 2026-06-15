@@ -1,37 +1,80 @@
-import { useAppSelector } from '../store/hooks';
+import {
+  DndContext,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  type DragEndEvent,
+} from '@dnd-kit/core';
+import type { InstanceId, ZoneId } from '@mtg/game-core';
+import { moveCard } from '@mtg/game-core';
+
+import { useAppDispatch, useAppSelector } from '../store/hooks';
+import Player from './Player/Player';
+import Inspector from './inspector/Inspector';
+import { CardInspectorProvider } from './inspector/CardInspectorProvider';
 
 export function Board() {
-  const { players, zones, cards, cardDefs } = useAppSelector((s) => s.board);
-  //todo внимание аишный ui ниже, плейсхолдер для тестов
+  const dispatch = useAppDispatch();
+  const playerIds = useAppSelector((s) => Object.keys(s.board.players));
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
+  );
+
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+    if (!over) return;
+
+    const data = over.data.current as
+      | { type: 'battlefield' | 'hand'; zoneId: ZoneId }
+      | undefined;
+    if (!data) return;
+
+    const instanceId = active.id as InstanceId;
+
+    if (data.type === 'battlefield') {
+      //todo аишный код, нужно разобраться и прочекать
+      const dragRect = active.rect.current.translated;
+      if (!dragRect) return;
+
+      const x = dragRect.left - over.rect.left;
+      const y = dragRect.top - over.rect.top;
+
+      dispatch(
+        moveCard({
+          instanceId,
+          zoneId: data.zoneId,
+          x: Math.max(0, x),
+          y: Math.max(0, y),
+        }),
+      );
+      return;
+    }
+
+    // todo вставлять карту не в конец а куда ее дропнут
+    dispatch(moveCard({ instanceId, zoneId: data.zoneId }));
+  };
+
+  // todo раскладка под 1/2/4 игроков, сейчас просто колонка
   return (
-    <div style={{ display: 'flex', gap: 24, padding: 16, fontFamily: 'sans-serif' }}>
-      {Object.values(players).map((player) => {
-        const playerZones = Object.values(zones).filter((z) => z.ownerId === player.id);
+    <CardInspectorProvider>
+      <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 24,
+            padding: 16,
+            fontFamily: 'sans-serif',
+          }}
+        >
+          {playerIds.map((id) => (
+            <Player key={id} playerId={id} />
+          ))}
 
-        return (
-          <section
-            key={player.id}
-            style={{ border: '1px solid #ccc', borderRadius: 8, padding: 12, minWidth: 220 }}
-          >
-            <h2 style={{ margin: '0 0 8px' }}>
-              {player.name} <small>· life {player.life}</small>
-            </h2>
-
-            {playerZones.map((zone) => (
-              <div key={zone.id} style={{ marginBottom: 8 }}>
-                <strong>{zone.type}</strong> ({zone.cardsId.length})
-                <ul style={{ margin: '4px 0 0', paddingLeft: 16 }}>
-                  {zone.cardsId.map((id) => {
-                    const card = cards[id];
-                    const def = cardDefs[card.definitionId];
-                    return <li key={id}>{def?.name ?? card.definitionId}</li>;
-                  })}
-                </ul>
-              </div>
-            ))}
-          </section>
-        );
-      })}
-    </div>
+          <Inspector />
+        </div>
+      </DndContext>
+    </CardInspectorProvider>
   );
 }

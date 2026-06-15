@@ -20,6 +20,7 @@
     "@dnd-kit/sortable": "^8.0.0",
     "@dnd-kit/utilities": "^3.2.2",
     "@mtg/game-core": "workspace:*",
+    "clsx": "^2.1.1",
     "react-redux": "^9.3.0"
   }
 }
