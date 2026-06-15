@@ -1,7 +1,8 @@
+import { useDroppable } from '@dnd-kit/core';
 import { type PlayerId, zoneId } from '@mtg/game-core';
 
 import { useAppSelector } from '../../../store/hooks';
-import Card from '../../card/Card';
+import DraggableCard from '../../card/DraggableCard';
 
 import styles from './Battlefield.module.css';
 
@@ -10,14 +11,22 @@ interface Props {
 }
 
 export default function Battlefield({ playerId }: Props) {
-  const zone = useAppSelector(
-    (state) => state.board.zones[zoneId(playerId, 'battlefield')],
-  );
+  const targetZoneId = zoneId(playerId, 'battlefield');
+  const zone = useAppSelector((state) => state.board.zones[targetZoneId]);
   const cards = useAppSelector((s) => s.board.cards);
   const cardDefs = useAppSelector((s) => s.board.cardDefs);
 
+  const { setNodeRef, isOver } = useDroppable({
+    id: targetZoneId,
+    data: { type: 'battlefield', zoneId: targetZoneId },
+  });
+
   return (
-    <div className={styles.battlefield}>
+    <div
+      ref={setNodeRef}
+      className={styles.battlefield}
+      style={isOver ? { borderColor: '#7aa2ff' } : undefined}
+    >
       {zone.cardsId.map((id) => {
         const inst = cards[id];
         const def = cardDefs[inst.definitionId];
@@ -28,7 +37,7 @@ export default function Battlefield({ playerId }: Props) {
             className={styles.slot}
             style={{ left: inst.x ?? 0, top: inst.y ?? 0 }}
           >
-            <Card instance={inst} definition={def} />
+            <DraggableCard instance={inst} definition={def} />
           </div>
         );
       })}
