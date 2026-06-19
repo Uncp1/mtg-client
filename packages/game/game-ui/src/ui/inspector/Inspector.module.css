@@ -1,0 +1,19 @@
+.menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.preview {
+    width: 100%;
+    max-width: 360px;
+}
+
+.art {
+    /*todo временная копипаста, переделать позже **/
+    width: var(--card-w);
+    height: calc(var(--card-w) * 88 / 63);
+    border-radius: calc(var(--card-w) * 0.048);
+
+    --card-w: 360px;
+}

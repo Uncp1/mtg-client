@@ -1,5 +1,10 @@
 .zone {
-    --card-w: 70px;
+    --card-w: 110px;
+
+    /*todo вынести это куда-то в общее место **/
+    width: var(--card-w);
+    height: calc(var(--card-w) * 88 / 63);
+    border-radius: calc(var(--card-w) * 0.048);
 }
 
 .back {

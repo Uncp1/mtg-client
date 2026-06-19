@@ -1,0 +1,12 @@
+.window {
+    display: flex;
+    flex-direction: row;
+}
+
+
+.board {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    flex: 1;
+}

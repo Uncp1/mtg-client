@@ -13,6 +13,8 @@ import Player from './Player/Player';
 import Inspector from './inspector/Inspector';
 import { CardInspectorProvider } from './inspector/CardInspectorProvider';
 
+import styles from './Board.module.css';
+
 export function Board() {
   const dispatch = useAppDispatch();
   const playerIds = useAppSelector((s) => Object.keys(s.board.players));
@@ -59,19 +61,12 @@ export function Board() {
   return (
     <CardInspectorProvider>
       <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: 24,
-            padding: 16,
-            fontFamily: 'sans-serif',
-          }}
-        >
-          {playerIds.map((id) => (
-            <Player key={id} playerId={id} />
-          ))}
-
+        <div className={styles.window}>
+          <div className={styles.board}>
+            {playerIds.map((id) => (
+              <Player key={id} playerId={id} />
+            ))}
+          </div>
           <Inspector />
         </div>
       </DndContext>

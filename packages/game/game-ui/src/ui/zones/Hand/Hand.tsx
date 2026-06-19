@@ -28,7 +28,6 @@ export default function Hand({ playerId }: Props) {
       className={styles.hand}
       style={isOver ? { outline: '2px solid #7aa2ff' } : undefined}
     >
-      <h3>hand ({hand.cardsId.length})</h3>
       <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
         {hand.cardsId.map((id) => {
           const instance = cards[id];

@@ -19,24 +19,25 @@ export default function Inspector() {
   //todo dfc добавить кнопку чтобы показывать обратную сторону
   //todo n2 нужна функция, которая преобразует условные символы в иконки
   return (
-    <aside>
+    <aside className={styles.menu}>
       <div className={styles.preview}>
         <img
           src={definition.imageURLS.large}
           alt={definition.name}
           className={styles.art}
         />
+
+        <h3>
+          {definition.name} <small>{definition.manaCost}</small>
+        </h3>
+        <div className={styles.type}>{definition.typeLine}</div>
+        <p className={styles.oracle}>{definition.oracleText}</p>
+        {definition.power && (
+          <div className={styles.pt}>
+            {definition.power}/{definition.toughness}
+          </div>
+        )}
       </div>
-      <h3>
-        {definition.name} <small>{definition.manaCost}</small>
-      </h3>
-      <div className={styles.type}>{definition.typeLine}</div>
-      <p className={styles.oracle}>{definition.oracleText}</p>
-      {definition.power && (
-        <div className={styles.pt}>
-          {definition.power}/{definition.toughness}
-        </div>
-      )}
     </aside>
   );
 }

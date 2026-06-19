@@ -1,8 +1,14 @@
-.player {
+.container {
     border: 1px solid #ccc;
     border-radius: 8px;
     padding: 12px;
 }
+
+.player {
+    display: flex;
+    flex-direction: row;
+}
+
 
 .header {
     margin: 0 0 8px;
